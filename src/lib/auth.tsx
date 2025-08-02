@@ -3,22 +3,17 @@ import {
   User,
   onAuthStateChanged,
   getAuth,
+  Auth,
 } from "firebase/auth";
 import {app} from "@/lib/firebase"; // Import the initialized app
 import {createContext, useContext, useEffect, useState} from "react";
 
-// Function to get the Auth instance, ensuring it's called only when needed.
-export function getAuthInstance() {
-  if (typeof window !== 'undefined') {
-    return getAuth(app);
-  }
-  return undefined;
-}
-
-const FirebaseAuthContext = createContext<{
+interface FirebaseAuthContextType {
   user: User | null;
   loading: boolean;
-}>({
+}
+
+const FirebaseAuthContext = createContext<FirebaseAuthContextType>({
   user: null,
   loading: true,
 });
@@ -32,17 +27,21 @@ export const FirebaseAuthProvider = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const authInstance = getAuthInstance();
-    if (!authInstance) { // Ensure auth is initialized before subscribing
-      setLoading(false);
-      return;
+    let authInstance: Auth | undefined;
+    if (typeof window !== 'undefined') {
+      authInstance = getAuth(app);
     }
-    const unsubscribe = onAuthStateChanged(authInstance, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
 
-    return () => unsubscribe();
+    if (authInstance) {
+      const unsubscribe = onAuthStateChanged(authInstance, (user) => {
+        setUser(user);
+        setLoading(false);
+      });
+
+      return () => unsubscribe();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   return (
