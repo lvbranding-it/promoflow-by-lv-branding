@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "genkit": [
+        "./node_modules/genkit"
+      ],
+      "genkit/*": [
+        "./node_modules/genkit/*"
+      ]
+    }
+  }
+}

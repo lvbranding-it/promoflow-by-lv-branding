@@ -1,0 +1,32 @@
+# Next.js
+.next/
+out/
+
+# Dependencies
+node_modules/
+
+# TypeScript cache
+tsc/
+.tsbuildinfo
+
+# firebase-frameworks specific
+.firebase/
+.devcontainer/
+.env.local
+.env.*
+!/.env.local.example
+
+# Production
+build/
+
+# Mac
+.DS_Store
+
+# Logs
+*.log
+
+# Misc
+.vscode/
+.idea/
+*.iml
+

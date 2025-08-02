@@ -1,0 +1,13 @@
+[
+  {
+    "origin": ["https://promoflow-sha9i.web.app"],
+    "method": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "responseHeader": [
+      "Content-Type",
+      "Authorization",
+      "X-Goog-Auth-User",
+      "X-Goog-User-Project"
+    ],
+    "maxAgeSeconds": 3600
+  }
+]

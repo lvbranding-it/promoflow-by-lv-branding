@@ -1,0 +1,18 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Rule 1: Public read access for campaign flyers.
+    // Write access is still restricted to authenticated users.
+    match /campaign-flyers/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Rule 2: User-specific files.
+    // This ensures only the authenticated user can access files in their own folder.
+    match /users/{userId}/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
